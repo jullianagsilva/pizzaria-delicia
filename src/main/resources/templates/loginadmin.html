@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login Administrador - Pizzaria</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body class="login-admin">
+
+  <form th:action="@{/loginadmin}" method="post">
+    <h2>Login Administrador</h2>
+
+    <label for="usuario">Usuário</label>
+    <input type="text" id="usuario" name="usuario" required autofocus />
+
+    <label for="senha">Senha</label>
+    <input type="password" id="senha" name="senha" required />
+
+    <button type="submit">Entrar</button>
+
+    <p th:if="${erro}" th:text="${erro}" class="erro-login"></p>
+    <a th:href="@{/}">Voltar à página inicial</a>
+  </form>
+
+</body>
+</html>

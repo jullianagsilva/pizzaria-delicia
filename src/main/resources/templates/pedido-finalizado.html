@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Pedido Finalizado</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+    <h1>Pedido Realizado com Sucesso!</h1>
+    <p>O seu pedido foi registrado e será preparado em breve.</p>
+
+    <section id="resumo-final">
+        <h2>Resumo do Pedido</h2>
+
+        <!-- Lista de pizzas -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Sabor</th>
+                    <th>Tamanho</th>
+                    <th>Qtd</th>
+                    <th>Preço Unit.</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pizza : ${pedido.pizzas}">
+                    <td th:text="${pizza.sabor}"></td>
+                    <td th:text="${pizza.tamanho}"></td>
+                    <td th:text="${pizza.quantidade}"></td>
+                    <td th:text="${#numbers.formatDecimal(pizza.preco, 1, 'POINT', 2, 'POINT')}">0.00</td>
+                    <td th:text="${#numbers.formatDecimal(pizza.preco * pizza.quantidade, 1, 'POINT', 2, 'POINT')}">0.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Totais -->
+        <p>Total dos Itens: € <span th:text="${#numbers.formatDecimal(totalItens, 1, 'POINT', 2, 'POINT')}">0.00</span></p>
+        <p>Taxa de Entrega: € <span th:text="${#numbers.formatDecimal(taxaEntrega, 1, 'POINT', 2, 'POINT')}">0.00</span></p>
+        <p><strong>Total do Pedido: € <span th:text="${#numbers.formatDecimal(totalPedido, 1, 'POINT', 2, 'POINT')}">0.00</span></strong></p>
+
+        <p>Forma de Pagamento: <span th:text="${pedido.pagamento.metodo}">-</span></p>
+
+        <p><strong>Cliente:</strong> <span th:text="${cliente.nome}"></span></p>
+        <p><strong>Telefone:</strong> <span th:text="${cliente.telefone}"></span></p>
+        <p><strong>Morada:</strong> <span th:text="${cliente.morada}"></span></p>    
+    </section>
+
+    <!-- Botão para exportar pedido -->
+    <form th:action="@{/exportar-pedido}" method="get">
+        <button type="submit">Exportar Pedido</button>
+    </form>
+
+    <!-- Link para voltar à página de pedidos -->
+    <a th:href="@{/pedido}" id="voltar-inicio">Voltar para Página de Pedidos</a>
+</body>
+</html>

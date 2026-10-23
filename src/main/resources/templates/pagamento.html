@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pagamento</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+  <h1>Pagamento do Pedido</h1>
+
+  <!-- Dados do Cliente -->
+  <section id="dados-cliente-pagamento">
+    <h2>Dados do Cliente</h2>
+    <p><strong>Nome:</strong> <span th:text="${cliente.nome}">Cliente</span></p>
+    <p><strong>Telefone:</strong> <span th:text="${cliente.telefone}">000000000</span></p>
+    <p><strong>Morada:</strong> <span th:text="${pedido.moradaEntrega}">Rua Exemplo, 123</span></p>
+  </section>
+
+  <!-- Resumo do Pedido -->
+  <section id="resumo-pagamento">
+    <h2>Resumo do Pedido</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Sabor</th>
+          <th>Tamanho</th>
+          <th>Preço Unitário</th>
+          <th>Quantidade</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="pizza : ${pedido.pizzas}">
+          <td th:text="${pizza.sabor}"></td>
+          <td th:text="${pizza.tamanho}"></td>
+          <td>€ <span th:text="${#numbers.formatDecimal(pizza.preco, 1, 'POINT', 2, 'POINT')}">0.00</span></td>
+          <td th:text="${pizza.quantidade}"></td>
+          <td>€ <span th:text="${#numbers.formatDecimal(pizza.preco * pizza.quantidade, 1, 'POINT', 2, 'POINT')}">0.00</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Taxa de Entrega: € <span th:text="${#numbers.formatDecimal(taxaEntrega, 1, 'POINT', 2, 'POINT')}">3.50</span></p>
+    <p><strong>Total: € <span th:text="${#numbers.formatDecimal(total, 1, 'POINT', 2, 'POINT')}">0.00</span></strong></p>
+  </section>
+
+  <!-- Forma de Pagamento e Botões -->
+  <section class="acoes">
+    <form th:action="@{/processar-pagamento}" method="post">
+      <label for="formaPagamento">Forma de Pagamento:</label>
+      <select id="formaPagamento" name="formaPagamento" required>
+        <option value="" disabled selected>Selecione</option>
+        <option value="Dinheiro">Dinheiro</option>
+        <option value="CartaoCredito">Cartão de Crédito</option>
+        <option value="CartaoDebito">Cartão de Débito</option>
+        <option value="Pix">Pix</option>
+      </select>
+      <button type="submit">Finalizar Pagamento</button>
+    </form>
+
+    <a th:href="@{/pedido}" class="btn">Voltar para Pedido</a>
+  </section>
+
+  <script th:src="@{/js/pagamento.js}"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pizzaria Delícia</title>
+  <!-- CSS carregado da pasta static/css -->
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+  <main>
+    <!-- Logo carregada da pasta static/img -->
+    <img th:src="@{/img/logo.png}" alt="Logo da Pizzaria Delícia" class="logo" />
+
+    <h1>Bem-vindo à Pizzaria Delícia!</h1>
+    <p>Selecione seu perfil para entrar:</p>
+
+    <nav>
+      <a th:href="@{/loginadmin}" role="button" aria-label="Sou administrador" class="btn">Sou Administrador</a>
+      <a th:href="@{/logincliente}" role="button" aria-label="Sou cliente" class="btn">Sou Cliente</a>
+    </nav>
+  </main>
+</body>
+</html>

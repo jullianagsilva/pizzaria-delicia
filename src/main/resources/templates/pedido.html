@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pedido do Cliente - Pizzaria</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body class="pedido">
+
+  <h1>Faça seu Pedido</h1>
+
+  <main>
+    <!-- Dados do Cliente -->
+    <section class="dados-cliente">
+      <h2>Dados do Cliente</h2>
+
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" th:value="${cliente.nome}" readonly />
+
+      <label for="telefone">Telefone:</label>
+      <input type="tel" id="telefone" th:value="${cliente.telefone}" readonly />
+
+      <label for="morada">Morada:</label>
+      <input type="text" id="morada" name="morada" th:value="${cliente.morada}" placeholder="Rua Exemplo, 123" />
+
+      <h2>Escolha sua Pizza</h2>
+      <form th:action="@{/pedido}" method="post">
+        <label for="sabor">Sabor:</label>
+        <select id="sabor" name="sabor" required>
+          <option value="Marguerita">Marguerita</option>
+          <option value="Calabresa">Calabresa</option>
+          <option value="Portuguesa">Portuguesa</option>
+          <option value="Frango com Catupiry">Frango com Catupiry</option>
+          <option value="Quatro Queijos">Quatro Queijos</option>
+          <option value="Vegetariana">Vegetariana</option>
+        </select>
+
+        <label for="tamanho">Tamanho:</label>
+        <select id="tamanho" name="tamanho" required>
+          <option value="Pequena">Pequena - € 15,00</option>
+          <option value="Média">Média - € 20,00</option>
+          <option value="Grande">Grande - € 25,00</option>
+        </select>
+
+        <label for="quantidade">Quantidade:</label>
+        <input type="number" id="quantidade" name="quantidade" value="1" min="1" required />
+
+        <label for="observacoes">Observações:</label>
+        <textarea id="observacoes" name="observacoes" rows="3" placeholder="Sem cebola, extra queijo..."></textarea>
+
+        <input type="hidden" name="morada" th:value="${cliente.morada}" />
+
+        <!-- Botões -->
+        <button type="submit" name="acao" value="adicionar">Adicionar ao Carrinho</button>
+        <button type="submit" name="acao" value="pagar" th:disabled="${#lists.isEmpty(carrinho.pizzas)}">
+          Ir para Pagamento
+        </button>
+      </form>
+    </section>
+
+    <!-- Carrinho -->
+    <section class="carrinho">
+      <h2>Resumo do Pedido</h2>
+
+      <!-- Carrinho vazio -->
+      <p th:if="${#lists.isEmpty(carrinho.pizzas)}">Seu carrinho está vazio.</p>
+
+      <!-- Tabela de pizzas -->
+      <table th:if="${!#lists.isEmpty(carrinho.pizzas)}">
+        <thead>
+          <tr>
+            <th>Sabor</th>
+            <th>Tamanho</th>
+            <th>Qtd</th>
+            <th>Preço Unit.</th>
+            <th>Subtotal</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="pizza, iterStat : ${carrinho.pizzas}">
+            <td th:text="${pizza.sabor}"></td>
+            <td th:text="${pizza.tamanho}"></td>
+            <td th:text="${pizza.quantidade}"></td>
+            <td th:text="${#numbers.formatDecimal(pizza.preco, 1, 'POINT', 2, 'POINT')}">0.00</td>
+            <td th:text="${#numbers.formatDecimal(pizza.preco * pizza.quantidade, 1, 'POINT', 2, 'POINT')}">0.00</td>
+            <td>
+              <form th:action="@{/remover-pizza}" method="post">
+                <input type="hidden" name="index" th:value="${iterStat.index}" />
+                <button type="submit">Remover</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Totais -->
+      <p>Taxa de Entrega: € <span th:text="${#numbers.formatDecimal(taxaEntrega, 1, 'POINT', 2, 'POINT')}">3.50</span></p>
+      <p><strong>Total: € <span th:text="${#numbers.formatDecimal(total, 1, 'POINT', 2, 'POINT')}">0.00</span></strong></p>
+    </section>
+  </main>
+
+  <!-- Ações adicionais -->
+  <section class="acoes">
+    <a th:href="@{/historico}" class="btn">Ver Histórico</a>
+    <a th:href="@{/logout}" class="btn">Sair</a>
+  </section>
+
+</body>
+</html>

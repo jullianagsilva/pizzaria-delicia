@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatórios</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+<body>
+<div class="relatorio">
+
+    <h1>Relatórios do Sistema</h1>
+
+    <!-- ===================== Pizzas mais vendidas ===================== -->
+    <h2>Pizzas Mais Vendidas</h2>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Sabor</th>
+                    <th>Tamanho</th>
+                    <th>Quantidade Vendida</th>
+                    <th>Total (€)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pizza : ${pizzasMaisVendidas}">
+                    <td th:text="${pizza.sabor != null ? pizza.sabor : 'N/A'}"
+                        th:classappend="${pizza.sabor == null ? 'nao-cadastrado' : ''}"></td>
+                    <td th:text="${pizza.tamanho != null ? pizza.tamanho : 'N/A'}"
+                        th:classappend="${pizza.tamanho == null ? 'nao-cadastrado' : ''}"></td>
+                    <td th:text="${pizza.quantidadeVendida != null ? pizza.quantidadeVendida : 0}"
+                        th:classappend="${pizza.quantidadeVendida == null ? 'nao-cadastrado' : ''}"></td>
+                    <td th:text="${pizza.totalVendas != null ? #numbers.formatDecimal(pizza.totalVendas, 1, 'COMMA', 2, 'POINT') : '0,00'}"
+                        th:classappend="${pizza.totalVendas == null ? 'nao-cadastrado' : ''}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ===================== Clientes mais frequentes ===================== -->
+    <h2>Clientes Mais Frequentes</h2>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Total Pedidos</th>
+                    <th>Total Gasto (€)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="cliente : ${clientesMaisFrequentes}">
+                    <td th:text="${cliente.nome != null ? cliente.nome : 'N/A'}"
+                        th:classappend="${cliente.nome == null ? 'nao-cadastrado' : ''}"></td>
+                    <td th:text="${cliente.totalPedidos != null ? cliente.totalPedidos : 0}"
+                        th:classappend="${cliente.totalPedidos == null ? 'nao-cadastrado' : ''}"></td>
+                    <td th:text="${cliente.totalGasto != null ? #numbers.formatDecimal(cliente.totalGasto, 1, 'COMMA', 2, 'POINT') : '0,00'}"
+                        th:classappend="${cliente.totalGasto == null ? 'nao-cadastrado' : ''}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ===================== Faturação por dia ===================== -->
+    <h2>Faturação (últimos 30 dias)</h2>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Total (€)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="dia : ${faturacaoPorDia}">
+                    <td th:text="${dia.dia != null ? dia.dia : 'N/A'}"
+                        th:classappend="${dia.dia == null ? 'nao-cadastrado' : ''}"></td>
+                    <td th:text="${dia.valor != null ? #numbers.formatDecimal(dia.valor, 1, 'COMMA', 2, 'POINT') : '0,00'}"
+                        th:classappend="${dia.valor == null ? 'nao-cadastrado' : ''}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ===================== Botão voltar ===================== -->
+    <div style="margin-top: 20px; text-align: center;">
+        <a th:href="@{/admin}" class="btn-voltar">Voltar</a>
+    </div>
+
+</div>
+</body>
+</html>

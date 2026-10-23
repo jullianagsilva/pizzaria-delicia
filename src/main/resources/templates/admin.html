@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Administrador</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="admin">
+  <div class="admin-container">
+    <h1>Painel do Administrador</h1>
+    <p>Bem-vindo, Admin!</p>
+
+    <div class="cards-container">
+      <a th:href="@{/relatorios}" class="card">
+        <i class="fa fa-file-alt"></i>
+        Relatórios de Vendas
+      </a>
+      <a th:href="@{/historico}" class="card">
+        <i class="fa fa-history"></i>
+        Histórico de Pedidos
+      </a>
+      <a th:href="@{/logout}" class="card card-sair">
+        <i class="fa fa-sign-out-alt"></i>
+        Sair
+      </a>
+    </div>
+  </div>
+</body>
+</html>

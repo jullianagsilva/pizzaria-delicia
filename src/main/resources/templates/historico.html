@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Histórico de Pedidos</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<div class="container">
+    <h1>Histórico de Pedidos</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nº Pedido</th>
+                <th>Cliente</th>
+                <th>Telefone</th>
+                <th>Data</th>
+                <th>Sabor</th>
+                <th>Tamanho</th>
+                <th>Quantidade</th>
+                <th>Subtotal</th>
+                <th>Taxa Entrega</th>
+                <th>Total</th>
+                <th>Pagamento</th>
+                <th>Status</th>
+                <th>Observações</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="lista-historico">
+            <!-- JS preencherá -->
+        </tbody>
+    </table>
+
+    <div class="paginacao">
+        <button id="prevPage">Anterior</button>
+        <span id="pagina-atual">1</span>
+        <button id="nextPage">Próxima</button>
+    </div>
+
+    <a href="/">Voltar</a>
+</div>
+
+<script src="/js/historico.js"></script>
+</body>
+</html>
